@@ -15,15 +15,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
   
-    - name: set image tag 
-      id: tag
-      run : echo "::set-output name=image_tag::hrk123123/frontend:$(date +%s)"
+      #- name: set image tag frontend
+      #id: tag
+      #run : echo "::set-output name=image_tag::hrk123123/frontend:$(date +%s)"
 
     - name: Build the Docker image
-      run: cd frontend && docker build . -t ${{ steps.tag.outputs.image_tag }} 
-
+      run: cd frontend && docker build . -t ${{ github.run_number }} 
+        #secrets.DOCKER_HUB_CICD – set up docker hub token password as secrets in github repo  
     - name: login into docker hub 
       run: echo "${{ secrets.DOCKER_HUB_CICD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
     - name: push image to docker hub
-      run: docker push ${{ steps.tag.outputs.image_tag }}
+      run: docker push ${{ github.run_number }}
