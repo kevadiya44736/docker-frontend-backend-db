@@ -37,7 +37,7 @@ jobs:
     - name: configure ssh key
       run: mkdir -p ~/.ssh/ && echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
 
-    - name: Deploy to EC2
+    - name: Deploy  to EC2
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@13.232.235.143 'bash -s' < deploy.sh
       
