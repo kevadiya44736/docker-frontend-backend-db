@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: cd ../../frontend && docker build . -t hrk123123/frontend:$(date +%s)
+      run: cd frontend && docker build . -t hrk123123/frontend:$(date +%s)
