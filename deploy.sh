@@ -1,3 +1,1 @@
-ls -ltr >> /tmp/tmp1
-
-echo " hello " > /tmp/tmp2
+sudo docker run --name frontend hrk123123/frontend:latest
