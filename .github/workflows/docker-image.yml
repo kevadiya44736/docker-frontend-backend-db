@@ -13,6 +13,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      env:
+        image_tag: hrk123123/frontend:$(date +%s)
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: cd frontend && docker build . -t hrk123123/frontend:$(date +%s)
+      run: cd frontend && docker build . -t ${{ env.image_tag }}
+
+    - name: login into docker hub 
+      run: echo "${{ secrets.DOCKER_HUB_CICD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: push image to docker hub
+      run: docker push ${{ env.image_tag }}
