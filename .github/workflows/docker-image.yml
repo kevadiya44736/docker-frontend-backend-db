@@ -11,11 +11,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    
     steps:
-      env:
-        image_tag: hrk123123/frontend:$(date +%s)
     - uses: actions/checkout@v3
+      env:
+        image_tag: "hrk123123/frontend:$(date +%s)"
     - name: Build the Docker image
       run: cd frontend && docker build . -t ${{ env.image_tag }}
 
