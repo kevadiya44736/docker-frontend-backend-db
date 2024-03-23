@@ -19,11 +19,14 @@ jobs:
       #id: tag
       #run : echo "::set-output name=image_tag::hrk123123/frontend:$(date +%s)"
 
-    - name: Build the Docker image
-      run: cd frontend && docker build . -t "hrk123123/frontend:${{ github.run_number }}"  
-        #secrets.DOCKER_HUB_CICD – set up docker hub token password as secrets in github repo  
-    - name: login into docker hub 
-      run: echo "${{ secrets.DOCKER_HUB_CICD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+    - name: install ssh client
+      run: sudo apt-get install openssh-client -y
 
-    - name: push image to docker hub
-      run: docker push "hrk123123/frontend:${{ github.run_number }}"
+    - name: configure ssh key
+      run: echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@13.232.235.143 'bash -s' < mkdir /tmp/tmp1
+      
+
